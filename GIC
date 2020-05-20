@@ -1,4 +1,3 @@
-
 d={
     'S':('AB','$'),
     'A':('aAbb','$'),
@@ -8,8 +7,6 @@ d={
 var=['AB','$','aAbb','cBeee','dC',]
 cuvAcceptate=['$']
 n=8
-
-
 
 def replace(sir,poz,sir1):
     sirNou=""
