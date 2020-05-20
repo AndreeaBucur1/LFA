@@ -1,0 +1,73 @@
+muchii = [('0', 'a', '1'), ('0', 'b', '3'), ('1', 'a', '2'), ('1', 'b', '6'), ('3', 'b', '3'), ('3', 'b', '4'),
+          ('4', 'a', '4'), ('4', 'a', '5'), ('5', 'a', '2'), ('5', 'a', '5'), ('6', 'b', '0'), ('6', 'b', '5')]
+
+simboluri = ['a', 'b']
+
+stari_finale=['0','5']
+
+b = muchii + []
+stare_initiala = '0'
+n = len(muchii)
+
+list_aux = []
+for i in range(n - 1):
+    ok = 0
+    for j in range(i + 1, n):
+        if muchii[i][0] == muchii[j][0] and muchii[j][1] == muchii[i][1]:
+            z = str(muchii[i][2]) + str(muchii[j][2])
+            list_aux.append((muchii[i][0], muchii[i][1], z))
+            if len(b) > j:
+                b.pop(j)
+            ok = 1
+    if ok == 1:
+        if i < len(b):
+            b.remove(b[i])
+
+list_aux += b
+
+aux2 = []
+for i in range(len(list_aux)):
+    if list_aux[i][0] == stare_initiala:
+        aux2.append(list_aux[i])
+
+def f(x):
+    l = []
+    for j in range(len(simboluri)):
+        sir = ""
+        for k in range(len(x)):
+            for i in range(len(muchii)):
+                if x[k] == str(muchii[i][0]) and muchii[i][1] == simboluri[j]:
+                    if muchii[i][2] not in sir:
+                        sir += muchii[i][2]
+                        sir = sorted(sir)
+                        sir = "".join(sir)
+
+        if len(sir) > 0:
+            l.append((x, simboluri[j], sir))
+    return (l)
+
+
+stari_dfa = [stare_initiala]
+
+i = 0
+
+while i < len(aux2):
+    if aux2[i][2] not in stari_dfa:
+        stari_dfa.append(aux2[i][2])
+        m = f(aux2[i][2])
+        for k in range(len(m)):
+            if m[k] not in aux2:
+                aux2 += m
+    i += 1
+
+print("Stari dfa:", stari_dfa)
+for i in range(len(aux2)):
+    print("Muchie:", aux2[i])
+
+stari_finale_dfa=[]
+for i in range(len(stari_finale)):
+    for j in range(len(stari_dfa)):
+        if stari_finale[i] in stari_dfa[j]:
+            if stari_dfa[j] not in stari_finale_dfa:
+                stari_finale_dfa.append(stari_dfa[j])
+print(stari_finale_dfa)
