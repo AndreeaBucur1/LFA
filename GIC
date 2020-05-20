@@ -1,0 +1,58 @@
+
+d={
+    'S':('AB','$'),
+    'A':('aAbb','$'),
+    'B':('cBeee','$','dC'),
+    'C':('dC','$')
+}
+var=['AB','$','aAbb','cBeee','dC',]
+cuvAcceptate=['$']
+n=8
+
+
+
+def replace(sir,poz,sir1):
+    sirNou=""
+    for i in range(poz):
+        sirNou+=sir[i]
+    if(sir1!='$'):
+        sirNou+=sir1
+    for i in range(poz+1,len(sir)):
+        sirNou+=sir[i]
+    return sirNou
+
+def verif(cuv):
+    for i in range(len(cuv)):
+        if cuv[i].isupper():
+            return i
+    return -1
+
+def countCap(cuv):
+    nr=0
+    for i in range(len(cuv)):
+        if cuv[i].isupper():
+            nr+=1
+    return nr
+
+while i<len(var):
+    print(i)
+    print(len(var))
+    cuv=var[i]
+    x=verif(cuv)
+    x=int(x)
+    if x!=-1:
+        for j in range(len(d[var[i][x]])):
+            aux=cuv
+
+            aux=replace(aux,x,d[var[i][x]][j])
+            if verif(aux)==-1:
+                if len(aux)<=n:
+                    if aux not in cuvAcceptate and aux!="":
+                        cuvAcceptate.append(aux)
+            elif len(aux)-countCap(aux)<=n:
+                if aux not in var:
+                    var.append(aux)
+            print(cuv)
+    i+=1
+print(len(cuvAcceptate))
+print(cuvAcceptate)
